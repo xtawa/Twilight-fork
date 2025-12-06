@@ -1,7 +1,7 @@
 backend:
   name: github
   branch: main
-  repo: xtawa/twilight # 请替换为您的 GitHub 仓库
+  repo: xtawa/Twilight-fork # 请替换为您的 GitHub 仓库
   site_domain: blog.xtyin.com # 请替换为您的域名
   base_url: https://blog.xtyin.com  # 请替换为您的 URL
   auth_endpoint: oauth # OAuth 路由由集成提供
@@ -102,4 +102,5 @@ collections:
 
 # 编辑器配置
 editor:
+
   preview: true  # 启用预览功能
