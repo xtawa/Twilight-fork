@@ -1,0 +1,82 @@
+name: Sync Docs
+
+on:
+  # 当外部服务（如 Notion Webhook）触发 'deploy' 事件时运行
+  repository_dispatch:
+    types:
+      - deploy
+  # 允许手动通过 Actions 页面运行
+  workflow_dispatch:
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - name: 检查分支 (Checkout)
+        # 推荐使用 actions/checkout@v4 版本
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # 关键修正 1：在 Checkout 时，就使用高权限的 PIC_TOKEN，避免后续身份冲突
+          token: ${{ secrets.PIC_TOKEN1 }}
+
+      - name: 安装 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24.x"
+
+      - name: 安装依赖和设置时区
+        run: |
+          export TZ='Asia/Shanghai'
+          npm install -g pnpm
+          pnpm install @elog/plugin-img-r2
+          pnpm install
+
+      - name: 拉取文档并同步到 R2 (注入 R2 密钥)
+        env:
+          # --- Notion 配置 ---
+          NOTION_TOKEN: ${{ secrets.NOTION_TOKEN }}
+          NOTION_DATABASE_ID: ${{ secrets.NOTION_DATABASE_ID }}
+          
+          # --- Cloudflare R2 配置 ---
+          R2_ACCESSKEYID: ${{ secrets.R2_ACCESSKEYID }}
+          R2_SECRET_ACCESSKEY: ${{ secrets.R2_SECRET_ACCESSKEY }}
+          R2_ENDPOINT: ${{ secrets.R2_ENDPOINT }}
+          R2_HOST: ${{ secrets.R2_HOST }}
+          R2_BUCKET: ${{ secrets.R2_BUCKET }}
+          
+        run: |
+          npx elog sync 
+
+      - name: 配置 Git 用户信息
+        run: |
+          # 这一步是为 commit 记录准备，身份认证由 PIC_TOKEN 负责
+          git config --global user.name "xtawa"
+          git config --global user.email "zaz203@outlook.com"
+
+      - name: 提交拉取的文档到本地
+        run: |
+          # 确保提交只发生在有更改时
+          git add .
+          if git status --porcelain | grep .; then
+            git commit -m "Docs Sync: ${{ github.event.repository.name }} refresh [ci skip]"
+          else
+            echo "No changes to commit. Skipping commit."
+          fi
+
+      - name: 推送文档到仓库 (使用 Push Action 覆盖默认权限)
+        # 关键修正 2：使用专门的 Action 来执行推送，并传入高权限 Token
+        uses: ad-m/github-push-action@master
+        with:
+          # 使用您的高权限 Token
+          github_token: ${{ secrets.PIC_TOKEN1 }}
+          # 推送当前分支
+          branch: ${{ github.ref_name }}
+          # 确保所有提交被接受
+
+          force: true
+

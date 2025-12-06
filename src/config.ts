@@ -17,7 +17,7 @@ import { getTranslateLanguageFromConfig, detectBrowserLanguage } from "./utils/l
  */
 
 // 自动检测浏览器语言
-const SITE_LANG = detectBrowserLanguage("en"); // 服务端渲染时默认为 'en'
+const SITE_LANG = detectBrowserLanguage("zh"); // 服务端渲染时默认为 'en'
 // 如果需要强制使用特定语言，可以取消注释下面一行并设置语言代码
 //const SITE_LANG = "zh"; // 强制使用的语言代码，'zh', 'en', 'ja' 等
 
@@ -28,11 +28,11 @@ const SITE_TIMEZONE = 8; // from -12 to 12 default in UTC+8
 // 站点配置
 export const siteConfig: SiteConfig = {
     // 站点 URL（以斜杠结尾）
-    siteURL: "https://twilight.spr-aachen.com/", // 请替换为你的站点 URL 并以斜杠结尾
+    siteURL: "https://blog.xtyin.com/", // 请替换为你的站点 URL 并以斜杠结尾
     // 站点标题
-    title: "Twilight",
+    title: "Hi,Co1sini",
     // 站点副标题
-    subtitle: "Blog Template",
+    subtitle: "存在于世间的记忆",
     // 语言配置
     lang: SITE_LANG, // 自动检测的浏览器语言
     // 翻译配置
@@ -114,10 +114,10 @@ export const siteConfig: SiteConfig = {
                 // 在主页显示文本
                 enable: true,
                 // 主标题
-                title: "Twilight",
+                title: "Footstep printer",
                 // 副标题，支持单个字符串或字符串数组
                 subtitle: [
-                    "Illuminate Our Paths",
+                    "Memories that exist in the world",
                 ],
                 // 副标题打字机效果
                 typewriter: {
@@ -195,16 +195,16 @@ export const navBarConfig: NavBarConfig = {
             icon: "material-symbols:link",
             children: [
                 {
-                    name: "GitHub",
-                    url: "https://github.com/Example",
+                    name: "Status",
+                    url: "https://status.xtyin.com/status/default",
                     external: true,
-                    icon: "fa6-brands:github",
+                    icon: "ic:sharp-edit-attributes",
                 },
                 {
-                    name: "Bilibili",
-                    url: "https://space.bilibili.com/Example",
+                    name: "Homepage",
+                    url: "https://me.xtyin.com",
                     external: true,
-                    icon: "fa6-brands:bilibili",
+                    icon: "material-symbols:house",
                 },
             ],
         },
@@ -214,11 +214,7 @@ export const navBarConfig: NavBarConfig = {
             icon: "material-symbols:person",
             children: [
                 LinkPreset.Projects,
-                LinkPreset.Skills,
                 LinkPreset.Timeline,
-                LinkPreset.Diary,
-                LinkPreset.Albums,
-                LinkPreset.Anime,
             ],
         },
         {
@@ -323,7 +319,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
         // 基础延迟时间 (毫秒)
         baseDelay: 0,
         // 每个组件递增的延迟时间 (毫秒)
-        increment: 50,
+        increment: 40,
     },
     // 响应式布局配置
     responsive: {
@@ -343,7 +339,7 @@ export const sidebarLayoutConfig: SidebarLayoutConfig = {
 // Umami统计配置
 export const umamiConfig = {
     // 是否显示Umami统计
-    enabled: false,
+    enabled: true,
     // API密钥
     apiKey: import.meta.env.UMAMI_API_KEY,
     // UmamiCloudAPI地址
@@ -358,26 +354,35 @@ export const profileConfig: ProfileConfig = {
     // 头像配置 (相对于 /src 目录。如果以 '/' 开头，则相对于 /public 目录)
     avatar: "assets/images/avatar.png",
     // 信息配置
-    name: "Twilight",
+    name: "Ivan Zhang",
     // 简介配置
-    bio: "Hi",
+    bio: "A little bit about you",
     // 链接配置
     links: [
         {
             name: "GitHub",
             icon: "fa6-brands:github",
-            url: "https://github.com/Spr-Aachen/Twilight",
+            url: "https://github.com/xtawa",
+        },
+        {
+            name: "Telegram",
+            icon: "fa6-brands:telegram",
+            url: "https://t.me/Yanluokeke",
+        },
+        {
+            name: "X(Twitter)",
+            icon: "fa6-brands:twitter",
+            url: "https://x.com/Coisini_Luo",
         },
     ],
 };
 
-
 // 公告配置
 export const announcementConfig: AnnouncementConfig = {
     // 公告标题
-    title: "Announcement",
+    title: "站点公告",
     // 公告内容
-    content: "Welcome to my blog!",
+    content: "Hi there",
     // 允许用户关闭公告
     closable: true,
     // 链接配置
@@ -385,7 +390,7 @@ export const announcementConfig: AnnouncementConfig = {
         // 启用链接
         enable: true,
         // 链接文本
-        text: "Learn More",
+        text: "了解更多",
         // 链接 URL
         url: "/about/",
         // 是否外部链接
@@ -427,13 +432,13 @@ export const postConfig: PostConfig = {
     // 评论配置
     comment: {
         // 启用评论功能
-        enable: false,
+        enable: true,
         // Twikoo 评论系统配置
         twikoo: {
             // 环境 ID
-            envId: "https://twikoo.vercel.app",
+            envId: "https://twikoo.xtawa.top",
             // 语言
-            lang: "en",
+            lang: "zh",
         },
     },
 };
@@ -504,7 +509,7 @@ export const particleConfig: ParticleConfig = {
 // 音乐播放器配置
 export const musicPlayerConfig: MusicPlayerConfig = {
     // 启用音乐播放器功能
-    enable: true,
+    enable: false,
 };
 
 
